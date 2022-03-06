@@ -69,22 +69,25 @@
     </style>
   </head>
   <body>
+    <svg width="500" height="500" viewBox="0 0 500 500" fill="none" xmlns="http://www.w3.org/2000/svg" id="svg" style="display: none">
+      <path fill-rule="evenodd" clip-rule="evenodd" d="M500 0H0V500H500V0ZM180 118.5C163.167 138.667 128.9 193.9 126.5 253.5C123.5 328 146.626 367.831 183.5 397C217 423.5 261.5 426.5 295 410C334.526 390.532 365 351.5 371 300.5C377 249.5 369 203.5 349.5 166.5C330 129.5 309 96.4999 280.5 85.9999C252 75.4999 221 70.4999 180 118.5Z" fill="#F6A43D" id="path"></path>
+    </svg>
   
-  <div class="container mx-auto flex flex-col justify-center items-center">
+    <div class="container mx-auto flex flex-col justify-center items-center">
       <h1 class="mt-4 font-bold text-xxl">Make your own Egg PFP</h1>
       <div id="eggContainer">
         
         <div class="my-4">
           <h2 class="text-lg py-2">0) Remove background to your img (Optional)</h2>
-          <form action="http://209.151.152.156:5000" method="post" enctype="multipart/form-data">
-            <input type="file" name="file"/>
-            <input type="submit" value="Submit" class="buttons"/>
+          <form action="http://209.151.152.156:5000/" method="post" enctype="multipart/form-data">
+            <input type="file" name="file">
+            <input type="submit" value="Submit" class="buttons">
          </form>
         </div>
   
         <div class="my-4">
           <h2 class="text-lg py-2">1. Choose an image</h2>
-          <input type="file" id="upload" />
+          <input type="file" id="upload">
         </div>
   
   
@@ -108,38 +111,38 @@
         </div>
         <h2 class="text-lg pt-2">3. Position and scale your image</h2>
         <div class="canvasWrapper">
-  
+          <canvas id="canvas" width="500" height="500"></canvas>
           <div class="controls">
             <h4>Scale</h4>
-            <input type="range" min="1" max="300" value="100" class="slider" id="scaleRange" />
-            <input type="number" min="1" max="300" value="100" id="scaleInput" class="border border-grey-800 px-2 py-1 ml-2" />
+            <input type="range" min="1" max="300" value="100" class="slider" id="scaleRange">
+            <input type="number" min="1" max="300" value="100" id="scaleInput" class="border border-grey-800 px-2 py-1 ml-2">
   
             <h4>X</h4>
-            <input type="range" min="-100" max="100" value="0" class="slider" id="xRange" />
-            <input type="number" min="-100" max="100" value="0" id="xInput" class="border border-grey-800 px-2 py-1 ml-2" />
+            <input type="range" min="-100" max="100" value="0" class="slider" id="xRange">
+            <input type="number" min="-100" max="100" value="0" id="xInput" class="border border-grey-800 px-2 py-1 ml-2">
   
             <h4>Y</h4>
-            <input type="range" min="-100" max="100" value="0" class="slider" id="yRange" />
-            <input type="number" min="-100" max="100" value="0" id="yInput" class="border border-grey-800 px-2 py-1 ml-2" />
+            <input type="range" min="-100" max="100" value="0" class="slider" id="yRange">
+            <input type="number" min="-100" max="100" value="0" id="yInput" class="border border-grey-800 px-2 py-1 ml-2">
   
             <h4>Rotate</h4>
-            <input type="range" min="0" max="360" value="0" class="slider" id="rotateRange" />
-            <input type="number" min="0" max="360" value="0" id="rotateInput" class="border border-grey-800 px-2 py-1 ml-2" />
+            <input type="range" min="0" max="360" value="0" class="slider" id="rotateRange">
+            <input type="number" min="0" max="360" value="0" id="rotateInput" class="border border-grey-800 px-2 py-1 ml-2">
             
             <h4>overlapping</h4>
-            <input type="checkbox" id="overlapping" onchange="drawPFP()"/>
-            
+            <input type="checkbox" id="overlapping" onchange="drawPFP()">
+          
           </div>
         </div>
       </div>
       <div class="pt-12">
         <button id="saveBtn" class="bg-blue-500 text-white px-6 py-2 rounded rounded-sm">Save</button>
       </div>
-        
-  </div>
+    </div>
   
     
   <script>
+      var canvas = document.getElementById('canvas');
       canvas.width = 500;
       canvas.height = 500;
       const scaleRange = document.getElementById("scaleRange");
@@ -154,7 +157,6 @@
       const path = document.getElementById("path");
       const saveBtn = document.getElementById("saveBtn");
       const upload = document.getElementById("upload");
-      var canvas = document.getElementById('canvas');
       var ctx = canvas.getContext('2d');
       var h = canvas.height;
       var w = canvas.width;
