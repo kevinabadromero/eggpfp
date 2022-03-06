@@ -1,424 +1,412 @@
 
-<!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Egg PFP Generator</title>
-  <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
-  <style>
-    #canvas {
-      padding-top: 20px;
-    }
-    #picker {
-      list-style: none;
-      display: inline-block;
-      margin: 20px 0;
-      padding: 0;
-    }
-    
-    #picker li {
-      display: inline-block;
-      cursor: pointer;
-      width: 50px;
-      height: 50px;
-    }
-    #darkPurpleColor {
-      background-color: #7f3485;
-    }
-    #purpleColor {
-      background-color: #754eab;
-    }
-    #greenColor {
-      background-color: #49913b;
-    }
-    #lightOrangeColor {
-      background-color: #f6a43e;
-    }
-    #greyColor {
-      background-color: #8799a5;
-    }
-    #blueColor {
-      background-color: #3b93da;
-    }
-    #redColor {
-      background-color: #bf1931;
-    }
-    #orangeColor {
-      background-color: #e85f28;
-    }
-    #neonGreenColor {
-      background-color: #aee355;
-    }
-    #lightBlueColor {
-      background-color: #aad3e5;
-    }
-    #darkBlueColor {
-      background-color: #346a86;
-    }
-    #darkGreenColor {
-      background-color: #35856a;
-    }
-    #darkRedColor {
-      background-color: #982b40;
-    }
-    .canvasWrapper {
-      display: flex;
-    }
-    .controls {
-      padding: 50px;
-    }
-  </style>
-</head>
-<body>
-  <svg width="500" height="500" viewBox="0 0 500 500" fill="none" xmlns="http://www.w3.org/2000/svg" id="svg" style="display: none">
-    <path fill-rule="evenodd" clip-rule="evenodd" d="M500 0H0V500H500V0ZM180 118.5C163.167 138.667 128.9 193.9 126.5 253.5C123.5 328 146.626 367.831 183.5 397C217 423.5 261.5 426.5 295 410C334.526 390.532 365 351.5 371 300.5C377 249.5 369 203.5 349.5 166.5C330 129.5 309 96.4999 280.5 85.9999C252 75.4999 221 70.4999 180 118.5Z" fill="#F6A43D" id="path"/>
-  </svg>
-
+  <head>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <meta charset="UTF-8">
+    <title>Egg PFP Generator</title>
+    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+      #canvas {
+        padding-top: 20px;
+      }
+      #picker {
+        list-style: none;
+        display: inline-block;
+        margin: 20px 0;
+        padding: 0;
+      }
+      #picker li {
+        display: inline-block;
+        cursor: pointer;
+        width: 50px;
+        height: 50px;
+      }
+      #darkPurpleColor {
+        background-color: #7f3485;
+      }
+      #purpleColor {
+        background-color: #754eab;
+      }
+      #greenColor {
+        background-color: #49913b;
+      }
+      #lightOrangeColor {
+        background-color: #f6a43e;
+      }
+      #greyColor {
+        background-color: #8799a5;
+      }
+      #blueColor {
+        background-color: #3b93da;
+      }
+      #redColor {
+        background-color: #bf1931;
+      }
+      #orangeColor {
+        background-color: #e85f28;
+      }
+      #neonGreenColor {
+        background-color: #aee355;
+      }
+      #lightBlueColor {
+        background-color: #aad3e5;
+      }
+      #darkBlueColor {
+        background-color: #346a86;
+      }
+      #darkGreenColor {
+        background-color: #35856a;
+      }
+      #darkRedColor {
+        background-color: #982b40;
+      }
+      .canvasWrapper {
+        display: flex;
+      }
+      .controls {
+        padding: 50px;
+      }
+    </style>
+  </head>
+  <body>
+  
   <div class="container mx-auto flex flex-col justify-center items-center">
-    <h1 class="mt-4 font-bold text-xxl">Make your own Egg PFP</h1>
-    <div id="eggContainer">
-      
-      <div class="my-4">
-        <h2 class="text-lg py-2">0) Remove background to your img (Optional)</h2>
-        <form action="http://209.151.152.156:5000" method="post" enctype="multipart/form-data">
-          <input type="file" name="file"/>
-          <input type="submit" value="Submit" class="buttons"/>
-       </form>
-      </div>
-
-      <div class="my-4">
-        <h2 class="text-lg py-2">1. Choose an image</h2>
-        <input type="file" id="upload" />
-      </div>
-
-
-      <h2 class="text-lg pt-2">2. Choose an egg color</h2>
-      <div>
-        <ul id="picker">
-          <li id="purpleColor"></li>
-          <li id="greenColor"></li>
-          <li id="darkPurpleColor"></li>
-          <li id="lightOrangeColor"></li>
-          <li id="greyColor"></li>
-          <li id="blueColor"></li>
-          <li id="redColor"></li>
-          <li id="orangeColor"></li>
-          <li id="neonGreenColor"></li>
-          <li id="lightBlueColor"></li>
-          <li id="darkBlueColor"></li>
-          <li id="darkGreenColor"></li>
-          <li id="darkRedColor"></li>
-        </ul>
-      </div>
-      <h2 class="text-lg pt-2">3. Position and scale your image</h2>
-      <div class="canvasWrapper">
-        <canvas id="canvas"></canvas>
-        <div class="controls">
-          <h4>Scale</h4>
-          <input type="range" min="1" max="300" value="100" class="slider" id="scaleRange" />
-          <input type="number" min="1" max="300" value="100" id="scaleInput" class="border border-grey-800 px-2 py-1 ml-2" />
-
-          <h4>X</h4>
-          <input type="range" min="-100" max="100" value="0" class="slider" id="xRange" />
-          <input type="number" min="-100" max="100" value="0" id="xInput" class="border border-grey-800 px-2 py-1 ml-2" />
-
-          <h4>Y</h4>
-          <input type="range" min="-100" max="100" value="0" class="slider" id="yRange" />
-          <input type="number" min="-100" max="100" value="0" id="yInput" class="border border-grey-800 px-2 py-1 ml-2" />
-
-          <h4>Rotate</h4>
-          <input type="range" min="0" max="360" value="0" class="slider" id="rotateRange" />
-          <input type="number" min="0" max="360" value="0" id="rotateInput" class="border border-grey-800 px-2 py-1 ml-2" />
-          
-          <h4>overlapping</h4>
-          <input type="checkbox" id="overlapping" onchange="drawPFP()"/>
+      <h1 class="mt-4 font-bold text-xxl">Make your own Egg PFP</h1>
+      <div id="eggContainer">
         
+        <div class="my-4">
+          <h2 class="text-lg py-2">0) Remove background to your img (Optional)</h2>
+          <form action="http://209.151.152.156:5000" method="post" enctype="multipart/form-data">
+            <input type="file" name="file"/>
+            <input type="submit" value="Submit" class="buttons"/>
+         </form>
+        </div>
+  
+        <div class="my-4">
+          <h2 class="text-lg py-2">1. Choose an image</h2>
+          <input type="file" id="upload" />
+        </div>
+  
+  
+        <h2 class="text-lg pt-2">2. Choose an egg color</h2>
+        <div>
+          <ul id="picker">
+            <li id="purpleColor"></li>
+            <li id="greenColor"></li>
+            <li id="darkPurpleColor"></li>
+            <li id="lightOrangeColor"></li>
+            <li id="greyColor"></li>
+            <li id="blueColor"></li>
+            <li id="redColor"></li>
+            <li id="orangeColor"></li>
+            <li id="neonGreenColor"></li>
+            <li id="lightBlueColor"></li>
+            <li id="darkBlueColor"></li>
+            <li id="darkGreenColor"></li>
+            <li id="darkRedColor"></li>
+          </ul>
+        </div>
+        <h2 class="text-lg pt-2">3. Position and scale your image</h2>
+        <div class="canvasWrapper">
+  
+          <div class="controls">
+            <h4>Scale</h4>
+            <input type="range" min="1" max="300" value="100" class="slider" id="scaleRange" />
+            <input type="number" min="1" max="300" value="100" id="scaleInput" class="border border-grey-800 px-2 py-1 ml-2" />
+  
+            <h4>X</h4>
+            <input type="range" min="-100" max="100" value="0" class="slider" id="xRange" />
+            <input type="number" min="-100" max="100" value="0" id="xInput" class="border border-grey-800 px-2 py-1 ml-2" />
+  
+            <h4>Y</h4>
+            <input type="range" min="-100" max="100" value="0" class="slider" id="yRange" />
+            <input type="number" min="-100" max="100" value="0" id="yInput" class="border border-grey-800 px-2 py-1 ml-2" />
+  
+            <h4>Rotate</h4>
+            <input type="range" min="0" max="360" value="0" class="slider" id="rotateRange" />
+            <input type="number" min="0" max="360" value="0" id="rotateInput" class="border border-grey-800 px-2 py-1 ml-2" />
+            
+            <h4>overlapping</h4>
+            <input type="checkbox" id="overlapping" onchange="drawPFP()"/>
+            
+          </div>
         </div>
       </div>
-    </div>
-    <div class="pt-12">
-      <button id="saveBtn" class="bg-blue-500 text-white px-6 py-2 rounded rounded-sm">Save</button>
-    </div>
-  </div>
-
-
-  <script>
-    const scaleRange = document.getElementById("scaleRange");
-    const xRange = document.getElementById("xRange");
-    const yRange = document.getElementById("yRange");
-    const rotateRange = document.getElementById("rotateRange");
-
-    const scaleInput = document.getElementById("scaleInput");
-    const xInput = document.getElementById("xInput");
-    const yInput = document.getElementById("yInput");
-    const rotateInput = document.getElementById("rotateInput");
-    
-    const svg = document.getElementById("svg");
-    const path = document.getElementById("path");
-    const saveBtn = document.getElementById("saveBtn");
-    const upload = document.getElementById("upload");
-
-    var canvas = document.getElementById('canvas');
-    var ctx = canvas.getContext('2d');
-    canvas.width = 500;
-    canvas.height = 500;
-
-    var rawImage;
-    var svgImage;
-
-    var h = canvas.height;
-    var w = canvas.width;
-    var aspect = 1;
-    var rotation = 0;
-
-    var center = {
-      x: 250,
-      y: 250,
-    }
-
-    function resizeAndDraw(height) {
-      h = height;
-      w = height * aspect; 
-
-      const newX = center.x - (w / 2);
-      const newY = center.y - (h / 2);
-
-      xRange.value = ((newX + w) / (canvas.width + w) * 200) - 100;
-      yRange.value = ((newY + h) / (canvas.height + h) * 200) - 100;
-
-      drawPFP();
-    }
-
-    function moveImage(newX, newY) {
-      center.x = newX + (w / 2);
-      center.y = newY + (h / 2);
-
-      drawPFP();
-    }
-
-    function rotateImage(angle) {
-      rotation = angle;
-      drawPFP();
-    }
-
-    function triggerDownload(fileName="egg_PFP.png") {
-      var imgURI = canvas
-        .toDataURL('image/png')
-        .replace('image/png', 'image/octet-stream');
-
-      let a = document.createElement('a')
-
-      a.setAttribute('download', fileName)
-      a.setAttribute('href', imgURI)
-      a.setAttribute('target', '_blank')
-
-      a.click()
-    }
-
-    function loadSvg() {
-      var data = (new XMLSerializer()).serializeToString(svg);
-      var svgBlob = new Blob([data], {type: 'image/svg+xml;charset=utf-8'});
-      var DOMURL = window.URL || window.webkitURL || window;
-
-      var url = DOMURL.createObjectURL(svgBlob);
-
-      svgImage = new Image();
-
-      svgImage.addEventListener("load", function() {
-        drawPFP();
-      })
-
-      svgImage.src = url;
-    }
-
-    function drawPFP() {
-      const overlap = document.getElementById("overlapping").checked
-      ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
-      ctx.fillStyle = "white";
-      ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height)
-      if (overlap == true){
-            
-            if (svgImage) {
-            ctx.drawImage(svgImage, 0, 0);
-            }
+      <div class="pt-12">
+        <button id="saveBtn" class="bg-blue-500 text-white px-6 py-2 rounded rounded-sm">Save</button>
+      </div>
         
-            if (rawImage) {
-                // Translate to ensure rotation is about the center
-                ctx.translate(center.x, center.y);
-                ctx.rotate(rotation * Math.PI / 180);
-                ctx.translate(-w/2, -h/2);
-
-                ctx.drawImage(rawImage, 0, 0, w, h);
-                // Reset transformation matrix to the identity matrix
-                ctx.setTransform(1, 0, 0, 1, 0, 0);
-            }
-      } else{
-        if (rawImage) {
-                // Translate to ensure rotation is about the center
-                ctx.translate(center.x, center.y);
-                ctx.rotate(rotation * Math.PI / 180);
-                ctx.translate(-w/2, -h/2);
-
-                ctx.drawImage(rawImage, 0, 0, w, h);
-                // Reset transformation matrix to the identity matrix
-                ctx.setTransform(1, 0, 0, 1, 0, 0);
-            }
-        if (svgImage) {
-            ctx.drawImage(svgImage, 0, 0);
-        }
+  </div>
+  
+    
+  <script>
+      canvas.width = 500;
+      canvas.height = 500;
+      const scaleRange = document.getElementById("scaleRange");
+      const xRange = document.getElementById("xRange");
+      const yRange = document.getElementById("yRange");
+      const rotateRange = document.getElementById("rotateRange");
+      const scaleInput = document.getElementById("scaleInput");
+      const xInput = document.getElementById("xInput");
+      const yInput = document.getElementById("yInput");
+      const rotateInput = document.getElementById("rotateInput");  
+      const svg = document.getElementById("svg");
+      const path = document.getElementById("path");
+      const saveBtn = document.getElementById("saveBtn");
+      const upload = document.getElementById("upload");
+      var canvas = document.getElementById('canvas');
+      var ctx = canvas.getContext('2d');
+      var h = canvas.height;
+      var w = canvas.width;
+      var rawImage;
+      var svgImage;
+      var aspect = 1;
+      var rotation = 0;
+      var center = {x: 250,y: 250}
+      var actualWidth;
+      var actualHeight;
+      
+      function resizeAndDraw(height) {
+        h = height;
+        w = height * aspect; 
+        const newX = center.x - (w / 2);
+        const newY = center.y - (h / 2);
+        xRange.value = ((newX + w) / (canvas.width + w) * 200) - 100;
+        yRange.value = ((newY + h) / (canvas.height + h) * 200) - 100;
+        drawPFP();
       }
-      
-      
-
-      
-    }
-
-
-    upload.addEventListener("change", function (event) {
-      if (!this.files || !this.files[0]) return;
-      
-      const fileReader = new FileReader();
-
-      fileReader.addEventListener("load", (event) => {
-        rawImage = new Image();
-
-        rawImage.addEventListener("load", () => {
-          center.x = 250;
-          center.y = 250;
-          rotation = 0;
-          aspect = rawImage.naturalWidth / rawImage.naturalHeight;
-          resizeAndDraw(canvas.height);
+  
+      function moveImage(newX, newY) {
+        center.x = newX + (w / 2);
+        center.y = newY + (h / 2);
+        drawPFP();
+      }
+  
+      function rotateImage(angle) {
+        rotation = angle;
+        drawPFP();
+      }
+  
+      function triggerDownload(fileName="egg_PFP.png") {
+        var imgURI = canvas
+          .toDataURL('image/png')
+          .replace('image/png', 'image/octet-stream');
+        let a = document.createElement('a')
+        a.setAttribute('download', fileName)
+        a.setAttribute('href', imgURI)
+        a.setAttribute('target', '_blank')
+        a.click()
+      }
+  
+      function loadSvg() {
+        var data = (new XMLSerializer()).serializeToString(svg);
+        var svgBlob = new Blob([data], {type: 'image/svg+xml;charset=utf-8'});
+        var DOMURL = window.URL || window.webkitURL || window;
+        var url = DOMURL.createObjectURL(svgBlob);
+        svgImage = new Image();
+        svgImage.addEventListener("load", function() {
+          drawPFP();
+        })
+        svgImage.src = url;
+      }
+  
+      function drawPFP() {
+        const overlap = document.getElementById("overlapping").checked
+        ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+        ctx.fillStyle = "white";
+        ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height)
+        if (overlap == true){
+              
+            if (svgImage) {
+              ctx.drawImage(svgImage, 0, 0);
+            }
+            if (rawImage) {
+                  
+                const newX = center.x - (w / 2);
+                const newY = center.y - (h / 2);
+                let tempWidth = w / 2 ;
+                let tempHeight = h / 2;
+                let tempAltWidth = rawImage.naturalWidth / 2
+                let tempAltHeight = rawImage.naturalHeight / 2
+                  // Translate to ensure rotation is about the center
+                ctx.translate(center.x, center.y);
+                ctx.rotate(rotation * Math.PI / 180);
+                ctx.translate(-w/2, -h/2);
+                ctx.drawImage(rawImage, 0, 0, tempAltWidth, tempAltHeight, newX, newY, tempWidth, tempHeight)
+                ctx.drawImage(rawImage, tempAltWidth, 0, tempAltWidth, tempAltHeight, tempWidth+newX, newY, tempWidth, tempHeight)
+                ctx.drawImage(rawImage, 0, tempAltHeight, tempAltWidth, tempAltHeight, newX, tempHeight+newY, tempWidth, tempHeight)
+                ctx.drawImage(rawImage, tempAltWidth, tempAltHeight, tempAltWidth, tempAltHeight, tempWidth+newX, tempHeight+newY, tempWidth, tempHeight)
+                  // Reset transformation matrix to the identity matrix
+                ctx.setTransform(1, 0, 0, 1, 0, 0);
+              }
+        } else{
+          if (rawImage) {
+                  const newX = center.x - (w / 2);
+                  const newY = center.y - (h / 2);
+                  let tempWidth = w / 2 ;
+                  let tempHeight = h / 2;
+                  let tempAltWidth = rawImage.naturalWidth / 2
+                  let tempAltHeight = rawImage.naturalHeight / 2
+  
+                  // Translate to ensure rotation is about the center
+                  ctx.translate(center.x, center.y);
+                  ctx.rotate(rotation * Math.PI / 10);
+                  ctx.translate(-w/2, -h/2);
+  
+                  ctx.drawImage(rawImage, 0, 0, tempAltWidth, tempAltHeight, newX, newY, tempWidth, tempHeight)
+                  ctx.drawImage(rawImage, tempAltWidth, 0, tempAltWidth, tempAltHeight, tempWidth+newX, newY, tempWidth, tempHeight)
+                  ctx.drawImage(rawImage, 0, tempAltHeight, tempAltWidth, tempAltHeight, newX, tempHeight+newY, tempWidth, tempHeight)
+                  ctx.drawImage(rawImage, tempAltWidth, tempAltHeight, tempAltWidth, tempAltHeight, tempWidth+newX, tempHeight+newY, tempWidth, tempHeight)
+  
+                  // Reset transformation matrix to the identity matrix
+                  ctx.setTransform(1, 0, 0, 1, 0, 0);
+              }
+          if (svgImage) {
+              ctx.drawImage(svgImage, 0, 0);
+          }
+        } 
+      }
+  
+      upload.addEventListener("change", function (event) {
+        if (!this.files || !this.files[0]) return;
+        
+        const fileReader = new FileReader();
+  
+        fileReader.addEventListener("load", (event) => {
+          rawImage = new Image();
+          rawImage.addEventListener("load", () => {
+            center.x = 250;
+            center.y = 250;
+            rotation = 0;
+            aspect = rawImage.naturalWidth / rawImage.naturalHeight;
+            resizeAndDraw(canvas.height);
+          });
+          rawImage.src = event.target.result;
+          actualWidth = rawImage.naturalWidth;
+          actualHeight = rawImage.naturalHeight; 
         });
-
-        rawImage.src = event.target.result;
+        fileReader.readAsDataURL(this.files[0]);
       });
-
-      fileReader.readAsDataURL(this.files[0]);
-    });
-
-    saveBtn.addEventListener("click", function() {
-      triggerDownload();
-    });
-
-    document.getElementById('purpleColor').addEventListener("click", function() {
-      path.style.fill = "#754eab";
+  
+      saveBtn.addEventListener("click", function() {
+        triggerDownload();
+      });
+  
+      document.getElementById('purpleColor').addEventListener("click", function() {
+        path.style.fill = "#754eab";
+        loadSvg();
+      });
+  
+      document.getElementById('darkPurpleColor').addEventListener("click", function() {
+        path.style.fill = "#7f3485";
+        loadSvg();
+      });
+  
+      document.getElementById('greenColor').addEventListener("click", function() {
+        path.style.fill = "#49913b";
+        loadSvg();
+      });
+  
+      document.getElementById('lightOrangeColor').addEventListener("click", function() {
+        path.style.fill = "#f6a43e";
+        loadSvg();
+      });
+  
+      document.getElementById('greyColor').addEventListener("click", function() {
+        path.style.fill = "#8799a5";
+        loadSvg();
+      });
+  
+      document.getElementById('blueColor').addEventListener("click", function() {
+        path.style.fill = "#3b93da";
+        loadSvg();
+      });
+  
+      document.getElementById('redColor').addEventListener("click", function() {
+        path.style.fill = "#bf1931";
+        loadSvg();
+      });
+  
+      document.getElementById('orangeColor').addEventListener("click", function() {
+        path.style.fill = "#e85f28";
+        loadSvg();
+      });
+  
+      document.getElementById('neonGreenColor').addEventListener("click", function() {
+        path.style.fill = "#aee355";
+        loadSvg();
+      });
+  
+      document.getElementById('lightBlueColor').addEventListener("click", function() {
+        path.style.fill = "#aad3e5";
+        loadSvg();
+      });
+  
+      document.getElementById('darkBlueColor').addEventListener("click", function() {
+        path.style.fill = "#346a86";
+        loadSvg();
+      });
+  
+      document.getElementById('darkGreenColor').addEventListener("click", function() {
+        path.style.fill = "#35856a";
+        loadSvg();
+      });
+  
+      document.getElementById('darkRedColor').addEventListener("click", function() {
+        path.style.fill = "#982b40";
+        loadSvg();
+      });
+      
+      scaleRange.addEventListener("change", function(event) {
+        scaleInput.value = event.target.value;
+        resizeAndDraw(canvas.height * parseInt(event.target.value) / 100);
+      });
+  
+      xRange.addEventListener("change", function(event) {
+        xInput.value = event.target.value;
+        const newX = ((canvas.width + w) / 2) - w + ((canvas.width + w) / 2) * parseInt(event.target.value) / 100;
+        moveImage(newX, center.y - (h/2));
+      });
+  
+      yRange.addEventListener("change", function(event) {
+        yInput.value = event.target.value;
+        const newY = ((canvas.height + h) / 2) - h + ((canvas.height + h) / 2) * parseInt(event.target.value) / 100;
+        moveImage(center.x - (w/2), newY);
+      });
+  
+      rotateRange.addEventListener("change", function(event) {
+        rotateInput.value = event.target.value;
+        rotateImage(parseInt(event.target.value));
+      });
+  
+      scaleInput.addEventListener("change", function(event) {
+        scaleRange.value = event.target.value;
+        resizeAndDraw(canvas.height * parseInt(event.target.value) / 100);
+      });
+  
+      xInput.addEventListener("change", function(event) {
+        xRange.value = event.target.value;
+        const newX = ((canvas.width + w) / 2) - w + ((canvas.width + w) / 2) * parseInt(event.target.value) / 100;
+        moveImage(newX, center.y - (h/2));
+      });
+  
+      yInput.addEventListener("change", function(event) {
+        yRange.value = event.target.value;
+        const newY = ((canvas.height + h) / 2) - h + ((canvas.height + h) / 2) * parseInt(event.target.value) / 100;
+        moveImage(center.x - (w/2), newY);
+      });
+  
+      rotateInput.addEventListener("change", function(event) {
+        rotateRange.value = event.target.value;
+        rotateImage(parseInt(event.target.value));
+      });
+  
       loadSvg();
-    });
-
-    document.getElementById('darkPurpleColor').addEventListener("click", function() {
-      path.style.fill = "#7f3485";
-      loadSvg();
-    });
-
-    document.getElementById('greenColor').addEventListener("click", function() {
-      path.style.fill = "#49913b";
-      loadSvg();
-    });
-
-    document.getElementById('lightOrangeColor').addEventListener("click", function() {
-      path.style.fill = "#f6a43e";
-      loadSvg();
-    });
-
-    document.getElementById('greyColor').addEventListener("click", function() {
-      path.style.fill = "#8799a5";
-      loadSvg();
-    });
-
-    document.getElementById('blueColor').addEventListener("click", function() {
-      path.style.fill = "#3b93da";
-      loadSvg();
-    });
-
-    document.getElementById('redColor').addEventListener("click", function() {
-      path.style.fill = "#bf1931";
-      loadSvg();
-    });
-
-    document.getElementById('orangeColor').addEventListener("click", function() {
-      path.style.fill = "#e85f28";
-      loadSvg();
-    });
-
-    document.getElementById('neonGreenColor').addEventListener("click", function() {
-      path.style.fill = "#aee355";
-      loadSvg();
-    });
-
-    document.getElementById('lightBlueColor').addEventListener("click", function() {
-      path.style.fill = "#aad3e5";
-      loadSvg();
-    });
-
-    document.getElementById('darkBlueColor').addEventListener("click", function() {
-      path.style.fill = "#346a86";
-      loadSvg();
-    });
-
-    document.getElementById('darkGreenColor').addEventListener("click", function() {
-      path.style.fill = "#35856a";
-      loadSvg();
-    });
-
-    document.getElementById('darkRedColor').addEventListener("click", function() {
-      path.style.fill = "#982b40";
-      loadSvg();
-    });
-    
-    scaleRange.addEventListener("change", function(event) {
-      scaleInput.value = event.target.value;
-      resizeAndDraw(canvas.height * parseInt(event.target.value) / 100);
-    });
-
-    xRange.addEventListener("change", function(event) {
-      xInput.value = event.target.value;
-      const newX = ((canvas.width + w) / 2) - w + ((canvas.width + w) / 2) * parseInt(event.target.value) / 100;
-      moveImage(newX, center.y - (h/2));
-    });
-
-    yRange.addEventListener("change", function(event) {
-      yInput.value = event.target.value;
-      const newY = ((canvas.height + h) / 2) - h + ((canvas.height + h) / 2) * parseInt(event.target.value) / 100;
-      moveImage(center.x - (w/2), newY);
-    });
-
-    rotateRange.addEventListener("change", function(event) {
-      rotateInput.value = event.target.value;
-      rotateImage(parseInt(event.target.value));
-    });
-
-    scaleInput.addEventListener("change", function(event) {
-      scaleRange.value = event.target.value;
-      resizeAndDraw(canvas.height * parseInt(event.target.value) / 100);
-    });
-
-    xInput.addEventListener("change", function(event) {
-      xRange.value = event.target.value;
-      const newX = ((canvas.width + w) / 2) - w + ((canvas.width + w) / 2) * parseInt(event.target.value) / 100;
-      moveImage(newX, center.y - (h/2));
-    });
-
-    yInput.addEventListener("change", function(event) {
-      yRange.value = event.target.value;
-      const newY = ((canvas.height + h) / 2) - h + ((canvas.height + h) / 2) * parseInt(event.target.value) / 100;
-      moveImage(center.x - (w/2), newY);
-    });
-
-    rotateInput.addEventListener("change", function(event) {
-      rotateRange.value = event.target.value;
-      rotateImage(parseInt(event.target.value));
-    });
-    
-    loadSvg();
   </script>
-</body>
-<style>
- .buttons{ 
-    background-color: #3b93da;
-    color: white;
-    width: 64px;
-    height: 30px;
-    cursor: pointer;
-}
-</style>
-</html>
+  
+  
+  
+  
+  </body>
+  </html>
+  
