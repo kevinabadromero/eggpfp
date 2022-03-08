@@ -1,7 +1,9 @@
 
 <html lang="en">
   <head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script src="jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js" integrity="sha512-yFjZbTYRCJodnuyGlsKamNE/LlEaEAxSUDe5+u61mV8zzqJVFOH7TnULE2/PP/l5vKWpUNnF4VGVkXh3MjgLsg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <meta charset="UTF-8">
     <title>Egg PFP Generator</title>
     <link href="tailwind.min.css" rel="stylesheet">
@@ -16,6 +18,7 @@
       }
       #canvas {
         padding-top: 20px;
+        cursor: crosshair;
       }
       #picker {
         list-style: none;
@@ -110,6 +113,150 @@
       .divLeft > div > input[type="number"]{
         width: 60px;
       }
+
+      /* Customize the label (the container) */
+
+.containerx{
+    width: 50%;
+    display: flex;
+}
+
+ .label {
+    position: relative;
+    padding-left: 35px;
+    cursor: pointer;
+    font-size: 16px;
+    user-select: none;
+    display: flex;
+    align-items: center;
+  }
+
+/* Hide the browser's default checkbox */
+.label input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+/* Create a custom checkbox */
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 5px;
+  height: 25px;
+  width: 25px;
+  background-color: #eee;
+}
+
+/* On mouse-over, add a grey background color */
+.label:hover input ~ .checkmark {
+  background-color: #ccc;
+}
+
+/* When the checkbox is checked, add a blue background */
+.label input:checked ~ .checkmark {
+  background-color: #2196F3;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Show the checkmark when checked */
+.label input:checked ~ .checkmark:after {
+  display: block;
+}
+
+/* Style the checkmark/indicator */
+.label .checkmark:after {
+  left: 9px;
+  top: 5px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+
+      #style {
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        background-color: transparent;
+        width: 25px;
+        height: 25px;
+        border: none;
+        cursor: pointer;
+      }
+      #style::-webkit-color-swatch {
+        border-radius: 50%;
+      }
+      #style::-moz-color-swatch {
+        border-radius: 50%;
+      }
+      .d-flex{
+        display: flex;
+        align-items: center;
+      }
+      .draw > img{
+        width: 18px;
+      }
+      .draw{
+        cursor: pointer;
+        opacity: 0.4;
+        transition: 300ms;
+      }
+      .draw:hover{
+        transform: scale(1.1);
+      }
+
+      .erase > img{
+        width: 18px;
+      }
+      .erase{
+        cursor: pointer;
+        opacity: 0.4;
+        margin-left:20px;
+        transition: 300ms;
+      }
+      .erase:hover{
+        transform: scale(1.1);
+      }
+
+
+    .rightSide{
+      width: 50%;
+      display: flex;
+      align-items: center;
+    }
+    .op-1{
+      transition: 300ms;
+      opacity: 1;
+    }
+    #canvasb{
+      z-index: 50002;
+      position: fixed;
+      margin: 0px;
+      padding-top: 20px;
+    }
+    .toolSize{
+      margin-left: 10%;
+      border: 1px solid #3534349e;
+      border-radius: 8px;
+      padding: 5px;
+    }
+    .my-10{
+      margin-top: 10px;
+      margin-bottom: 10px;
+    }
+
     </style>
   </head>
   <body>
@@ -124,6 +271,7 @@
 
         <div class="canvasWrapper">
           <canvas id="canvas" width="500" height="500"></canvas>
+          <canvas id="canvasb" width="500" height="500"></canvas>
           <div class="controls">
             <div class="selectContainer"> 
               <div class="my-4">
@@ -173,8 +321,40 @@
             </div>
           </div>
           </div>
-            <h4>overlapping</h4>
-            <input type="checkbox" id="overlapping" onchange="drawPFP()">
+          <div class="container d-flex my-10">
+            <div class="containerx">
+            <label class="label"><i class="fas fa-arrow-up-right"></i>
+              <input type="checkbox" id="overlapping" onchange="drawPFP()">
+              <span class="checkmark"></span>
+            </label>
+
+            <label class="label"><i class="fas fa-arrow-up-left"></i>
+              <input type="checkbox" id="overlapping" onchange="drawPFP()">
+              <span class="checkmark"></span>
+            </label>
+
+            <label class="label"><i class="fas fa-arrow-down-right"></i>
+              <input type="checkbox" id="overlapping" onchange="drawPFP()">
+              <span class="checkmark"></span>
+            </label>
+
+            <label class="label"><i class="fas fa-arrow-down-left"></i>
+              <input type="checkbox" id="overlapping" onchange="drawPFP()">
+              <span class="checkmark"></span>
+            </label>
+
+          </div>
+            <div class="rightSide">
+              <a class="draw" onclick="toggleDraw()"><img src="https://img.icons8.com/fluency-systems-filled/48/000000/pencil-tip.png"/></a>
+              <input type="color" value="#000000" id="style" class="colorPicker"/>
+              
+              <a class="erase" onclick="toggleErase()">
+                <img src="https://img.icons8.com/fluency-systems-filled/48/000000/erase.png"/>
+              </a>
+              <input type="number" value="5" min="1" max="50" class="toolSize" />
+            </div>
+          </div>
+            
             
             <h2 class="text-lg pt-2">2. Choose an egg color</h2>
         
@@ -252,6 +432,7 @@
       }
   
       function triggerDownload(fileName="egg_PFP.png") {
+        canvas.getContext('2d').drawImage(canvasb, 0, 0);
         var imgURI = canvas
           .toDataURL('image/png')
           .replace('image/png', 'image/octet-stream');
@@ -260,6 +441,7 @@
         a.setAttribute('href', imgURI)
         a.setAttribute('target', '_blank')
         a.click()
+
       }
   
       function loadSvg() {
@@ -468,54 +650,105 @@
       loadSvg();
   </script>
   <script>
-    var canvasx = $(canvas).offset().left;
-    var canvasy = $(canvas).offset().top;
+    
+     var canvasb = document.getElementById('canvasb');
+     var ctxa = canvasb.getContext('2d');
+    canvasb.width = 500;
+    canvasb.height = 500;
+    var canvasx = $(canvasb).offset().left;
+    var canvasy = $(canvasb).offset().top;
     var last_mousex = last_mousey = 0;
+    var actualColor;
     var mousex = mousey = 0;
     var mousedown = false;
-    var tooltype = 'draw';
+    var tooltype = 'normal';
+    let x = false
+    let y = false
 
+      function toggleDraw(){
+        if (y){
+          $('.erase').click()
+        }
+        if (!x){
+          x= true
+          tooltype = 'draw'
+        }
+        else{
+          x = false;
+          tooltype = 'normal'
+        }
+      }
 
+      function toggleErase(){
+        if (x){
+          $('.draw').click()
+        }
+        if (!y){
+          y= true
+          tooltype = 'erase'
+        }
+        else{
+          y = false;
+          tooltype = 'normal'
+        }
+      }
     
-$(canvas).on('mousedown', function(e) {
+    
+$(canvasb).on('mousedown', function(e) {
     last_mousex = mousex = parseInt(e.clientX-canvasx);
-	last_mousey = mousey = parseInt(e.clientY-canvasy);
+	  last_mousey = mousey = parseInt(e.clientY-canvasy);
     mousedown = true;
 });
 
 //Mouseup
-$(canvas).on('mouseup', function(e) {
+$(canvasb).on('mouseup', function(e) {
     mousedown = false;
 });
 
 //Mousemove
-$(canvas).on('mousemove', function(e) {
+$(canvasb).on('mousemove', function(e) {
     mousex = parseInt(e.clientX-canvasx);
     mousey = parseInt(e.clientY-canvasy);
     if(mousedown) {
-        ctx.beginPath();
+        var toolSize = $(".toolSize").val()
+        ctxa.beginPath();
         if(tooltype=='draw') {
-            ctx.globalCompositeOperation = 'source-over';
-            ctx.strokeStyle = 'black';
-            ctx.lineWidth = 3;
-        } else {
-            ctx.globalCompositeOperation = 'destination-out';
-            ctx.lineWidth = 10;
+            var actualColor = $('.colorPicker').val()
+            ctxa.globalCompositeOperation = 'source-over';
+            ctxa.strokeStyle = actualColor;
+            ctxa.lineWidth = toolSize;
+            ctxa.moveTo(last_mousex,last_mousey);
+            ctxa.lineTo(mousex,mousey);
+            ctxa.lineJoin = ctxa.lineCap = 'round';
+            ctxa.stroke();
+        } if(tooltype=='erase') {
+            ctxa.globalCompositeOperation = 'destination-out';
+            ctxa.lineWidth = toolSize;
+            ctxa.moveTo(last_mousex,last_mousey);
+            ctxa.lineTo(mousex,mousey);
+            ctxa.lineJoin = ctx.lineCap = 'round';
+            ctxa.stroke();
         }
-        ctx.moveTo(last_mousex,last_mousey);
-        ctx.lineTo(mousex,mousey);
-        ctx.lineJoin = ctx.lineCap = 'round';
-        ctx.stroke();
+        if (tooltype=='normal'){
+
+        }
+        
     }
     last_mousex = mousex;
     last_mousey = mousey;
-    //Output
-    $('#output').html('current: '+mousex+', '+mousey+'<br/>last: '+last_mousex+', '+last_mousey+'<br/>mousedown: '+mousedown);
 });
   </script>
   <script>
     $("#file").on("change", function(){
       $("#form").submit()
+    })
+
+    $(".draw").click(function(){
+      $(".draw").toggleClass("op-1")
+    })
+
+    $(".erase").click(function(){
+      $(".erase").toggleClass("op-1")
     })
   </script>
   
