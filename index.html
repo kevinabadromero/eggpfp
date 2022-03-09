@@ -325,22 +325,22 @@
           <div class="container d-flex my-10">
             <div class="containerx">
             <label class="label"><i class="fas fa-arrow-up-right"></i>
-              <input type="checkbox" id="overlapping" onchange="drawPFP()">
+              <input type="checkbox" id="overlapping" class="s1" onchange="drawPFP()">
               <span class="checkmark"></span>
             </label>
 
             <label class="label"><i class="fas fa-arrow-up-left"></i>
-              <input type="checkbox" id="overlapping" onchange="drawPFP()">
+              <input type="checkbox" id="overlapping2" class="s2" onchange="drawPFP()">
               <span class="checkmark"></span>
             </label>
 
             <label class="label"><i class="fas fa-arrow-down-right"></i>
-              <input type="checkbox" id="overlapping" onchange="drawPFP()">
+              <input type="checkbox" id="overlapping3" class="s3" onchange="drawPFP()">
               <span class="checkmark"></span>
             </label>
 
             <label class="label"><i class="fas fa-arrow-down-left"></i>
-              <input type="checkbox" id="overlapping" onchange="drawPFP()">
+              <input type="checkbox" id="overlapping4" class="s4" onchange="drawPFP()">
               <span class="checkmark"></span>
             </label>
 
@@ -388,6 +388,10 @@
       var canvas = document.getElementById('canvas');
       canvas.width = 500;
       canvas.height = 500;
+      var sideOne = document.getElementById("overlapping").checked
+      var sideTwo = document.getElementById("overlapping2").checked
+      var sideThree = document.getElementById("overlapping3").checked
+      var sideFour = document.getElementById("overlapping4").checked
       const scaleRange = document.getElementById("scaleRange");
       const xRange = document.getElementById("xRange");
       const yRange = document.getElementById("yRange");
@@ -459,32 +463,68 @@
   
       function drawPFP() {
         const overlap = document.getElementById("overlapping").checked
+        const overlap2 = document.getElementById("overlapping2").checked
+        const overlap3 = document.getElementById("overlapping3").checked
+        const overlap4 = document.getElementById("overlapping4").checked
         ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
         ctx.fillStyle = "white";
         ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height)
-        if (overlap == true){
-              
-            if (svgImage) {
-              ctx.drawImage(svgImage, 0, 0);
-            }
+        if (overlap == true ^ overlap2 == true ^ overlap3 == true ^ overlap4 == true){
             if (rawImage) {
-                  
+                console.log("overlapped")
                 const newX = center.x - (w / 2);
                 const newY = center.y - (h / 2);
+                sideOne = document.getElementById("overlapping").checked
+                sideTwo = document.getElementById("overlapping2").checked
+                sideThree = document.getElementById("overlapping3").checked
+                sideFour = document.getElementById("overlapping4").checked
                 let tempWidth = w / 2 ;
                 let tempHeight = h / 2;
                 let tempAltWidth = rawImage.naturalWidth / 2
                 let tempAltHeight = rawImage.naturalHeight / 2
-                  // Translate to ensure rotation is about the center
                 ctx.translate(center.x, center.y);
                 ctx.rotate(rotation * Math.PI / 180);
                 ctx.translate(-w/2, -h/2);
-                ctx.drawImage(rawImage, 0, 0, tempAltWidth, tempAltHeight, newX, newY, tempWidth, tempHeight)
-                ctx.drawImage(rawImage, tempAltWidth, 0, tempAltWidth, tempAltHeight, tempWidth+newX, newY, tempWidth, tempHeight)
-                ctx.drawImage(rawImage, 0, tempAltHeight, tempAltWidth, tempAltHeight, newX, tempHeight+newY, tempWidth, tempHeight)
-                ctx.drawImage(rawImage, tempAltWidth, tempAltHeight, tempAltWidth, tempAltHeight, tempWidth+newX, tempHeight+newY, tempWidth, tempHeight)
-                  // Reset transformation matrix to the identity matrix
+                  // Translate to ensure rotation is about the center
+                if (sideOne == false){
+                  ctx.drawImage(rawImage, 0, 0, tempAltWidth, tempAltHeight, newX, newY, tempWidth, tempHeight)
+                }
+
+                if (sideTwo == false){
+                  ctx.drawImage(rawImage, tempAltWidth, 0, tempAltWidth, tempAltHeight, tempWidth+newX, newY, tempWidth, tempHeight)
+                }
+
+                if (sideThree == false){
+                  ctx.drawImage(rawImage, 0, tempAltHeight, tempAltWidth, tempAltHeight, newX, tempHeight+newY, tempWidth, tempHeight)
+                }
+
+                if (sideFour == false){
+                  ctx.drawImage(rawImage, tempAltWidth, tempAltHeight, tempAltWidth, tempAltHeight, tempWidth+newX, tempHeight+newY, tempWidth, tempHeight)
+                }
+                
+                ctx.drawImage(svgImage, 0, 0);
+
+                if (sideOne == true){
+                  ctx.drawImage(rawImage, 0, 0, tempAltWidth, tempAltHeight, newX, newY, tempWidth, tempHeight)
+                }
+
+                if (sideTwo == true){
+                  ctx.drawImage(rawImage, tempAltWidth, 0, tempAltWidth, tempAltHeight, tempWidth+newX, newY, tempWidth, tempHeight)
+                }
+
+                if (sideThree == true){
+                  ctx.drawImage(rawImage, 0, tempAltHeight, tempAltWidth, tempAltHeight, newX, tempHeight+newY, tempWidth, tempHeight)
+                }
+
+                if (sideFour == true){
+                  ctx.drawImage(rawImage, tempAltWidth, tempAltHeight, tempAltWidth, tempAltHeight, tempWidth+newX, tempHeight+newY, tempWidth, tempHeight)
+                }
+                
                 ctx.setTransform(1, 0, 0, 1, 0, 0);
+              } else{
+                if (svgImage) {
+              ctx.drawImage(svgImage, 0, 0);
+          }
               }
         } else{
           if (rawImage) {
