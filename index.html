@@ -269,7 +269,6 @@
       <h1 class="mt-4 font-bold text-xxl">Make your own Egg PFP</h1>
       <div id="eggContainer">
 
-
         <div class="canvasWrapper">
           <canvas id="canvas" width="500" height="500"></canvas>
           <canvas id="canvasb" width="500" height="500"></canvas>
@@ -277,9 +276,9 @@
             <div class="selectContainer"> 
               <div class="my-4">
                 <h2 class="text-lg py-2">0) Remove the background</h2>
-                <form action="http://209.151.152.156:5000/" id="form" method="post" enctype="multipart/form-data" target="_blank">
+                <form>
                   <label class="file">
-                    <input type="file" name="file" id="file">
+                    <input type="file" name="file" id="file" onchange="rembg()">
                     Select
                   </label>
                </form>
@@ -791,6 +790,39 @@ $(canvasb).on('mousemove', function(e) {
     $(".erase").click(function(){
       $(".erase").toggleClass("op-1")
     })
+
+
+    function rembg(){
+    var input = document.querySelector('#file')
+    var data = new FormData()
+    data.append('file', input.files[0])
+    fetch('http://209.151.152.156:5000', {
+      method: 'POST',
+      mode: 'cors', // no-cors, *cors, same-origin
+        credentials: 'same-origin',
+        body: data
+    }).then((data)=>{
+        data.blob().then(imageBlob => {
+          var objectURL = URL.createObjectURL(imageBlob);
+          const fileReader = new FileReader();
+  
+          fileReader.addEventListener("load", (imageBlob) => {
+            rawImage = new Image();
+            rawImage.addEventListener("load", () => {
+              center.x = 250;
+              center.y = 250;
+              rotation = 0;
+              aspect = rawImage.naturalWidth / rawImage.naturalHeight;
+              resizeAndDraw(canvas.height);
+            });
+            rawImage.src = event.target.result;
+            actualWidth = rawImage.naturalWidth;
+            actualHeight = rawImage.naturalHeight; 
+          });
+          fileReader.readAsDataURL(imageBlob);
+      });
+    })}
+    
   </script>
   
   </body>
