@@ -468,7 +468,7 @@
         ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
         ctx.fillStyle = "white";
         ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height)
-        if (overlap == true ^ overlap2 == true ^ overlap3 == true ^ overlap4 == true){
+        if (overlap == true || overlap2 == true || overlap3 == true || overlap4 == true){
             if (rawImage) {
                 console.log("overlapped")
                 const newX = center.x - (w / 2);
@@ -484,42 +484,54 @@
                 ctx.translate(center.x, center.y);
                 ctx.rotate(rotation * Math.PI / 180);
                 ctx.translate(-w/2, -h/2);
-                  // Translate to ensure rotation is about the center
+
                 if (sideOne == false){
                   ctx.drawImage(rawImage, 0, 0, tempAltWidth, tempAltHeight, newX, newY, tempWidth, tempHeight)
+                  console.log("1 not")
                 }
 
                 if (sideTwo == false){
+                  console.log("2 not")
                   ctx.drawImage(rawImage, tempAltWidth, 0, tempAltWidth, tempAltHeight, tempWidth+newX, newY, tempWidth, tempHeight)
                 }
 
                 if (sideThree == false){
+                  console.log("3 not")
                   ctx.drawImage(rawImage, 0, tempAltHeight, tempAltWidth, tempAltHeight, newX, tempHeight+newY, tempWidth, tempHeight)
                 }
 
                 if (sideFour == false){
+                  console.log("4 not")
                   ctx.drawImage(rawImage, tempAltWidth, tempAltHeight, tempAltWidth, tempAltHeight, tempWidth+newX, tempHeight+newY, tempWidth, tempHeight)
                 }
                 
                 ctx.drawImage(svgImage, 0, 0);
 
                 if (sideOne == true){
+                  console.log("1 yes")
+
                   ctx.drawImage(rawImage, 0, 0, tempAltWidth, tempAltHeight, newX, newY, tempWidth, tempHeight)
                 }
 
                 if (sideTwo == true){
+                  console.log("2 yes")
+
                   ctx.drawImage(rawImage, tempAltWidth, 0, tempAltWidth, tempAltHeight, tempWidth+newX, newY, tempWidth, tempHeight)
                 }
 
                 if (sideThree == true){
+                  console.log("3 yes")
+
                   ctx.drawImage(rawImage, 0, tempAltHeight, tempAltWidth, tempAltHeight, newX, tempHeight+newY, tempWidth, tempHeight)
                 }
 
                 if (sideFour == true){
+                  console.log("4 yes")
+                  
                   ctx.drawImage(rawImage, tempAltWidth, tempAltHeight, tempAltWidth, tempAltHeight, tempWidth+newX, tempHeight+newY, tempWidth, tempHeight)
                 }
-                
                 ctx.setTransform(1, 0, 0, 1, 0, 0);
+                
               } else{
                 if (svgImage) {
               ctx.drawImage(svgImage, 0, 0);
