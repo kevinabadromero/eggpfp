@@ -481,9 +481,8 @@
                 let tempHeight = h / 2;
                 let tempAltWidth = rawImage.naturalWidth / 2
                 let tempAltHeight = rawImage.naturalHeight / 2
-                ctx.translate(center.x, center.y);
-                ctx.rotate(rotation * Math.PI / 180);
-                ctx.translate(-w/2, -h/2);
+                
+                
 
                 if (sideOne == false){
                   ctx.drawImage(rawImage, 0, 0, tempAltWidth, tempAltHeight, newX, newY, tempWidth, tempHeight)
@@ -497,16 +496,21 @@
 
                 if (sideThree == false){
                   console.log("3 not")
+                 
                   ctx.drawImage(rawImage, 0, tempAltHeight, tempAltWidth, tempAltHeight, newX, tempHeight+newY, tempWidth, tempHeight)
+                  
                 }
 
                 if (sideFour == false){
                   console.log("4 not")
+                  
                   ctx.drawImage(rawImage, tempAltWidth, tempAltHeight, tempAltWidth, tempAltHeight, tempWidth+newX, tempHeight+newY, tempWidth, tempHeight)
                 }
                 
                 ctx.drawImage(svgImage, 0, 0);
-
+                ctx.translate(w/2, h/2);
+                ctx.rotate(rotation * Math.PI / 180);
+                ctx.translate(-w/2, -h/2);
                 if (sideOne == true){
                   console.log("1 yes")
 
@@ -530,6 +534,7 @@
                   
                   ctx.drawImage(rawImage, tempAltWidth, tempAltHeight, tempAltWidth, tempAltHeight, tempWidth+newX, tempHeight+newY, tempWidth, tempHeight)
                 }
+                
                 ctx.setTransform(1, 0, 0, 1, 0, 0);
                 
               } else{
