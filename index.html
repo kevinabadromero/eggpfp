@@ -6,7 +6,7 @@
     <script src="all.min.js"></script>
     <link href="all.css" rel="stylesheet">
     <meta charset="UTF-8">
-    <title>Egg PFP Generator</title>
+    <title>Nested Egg PFP Builder</title>
     <link href="tailwind.min.css" rel="stylesheet">
     <style>
       @import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
@@ -14,12 +14,30 @@
       *{
         font-family: 'Open Sans', sans-serif;
       }
+      .title-c{
+        font-size: 18px;
+        color: #000;
+        font-weight: bold;
+      }
       .h-100{
         height: 100%;
+      }
+
+      .downup{
+        height: 65px;
+        width: 50%;
+      }
+
+      .updown{
+        width: 50%;
+        height: 65px;
       }
       #canvas {
         padding-top: 20px;
         cursor: crosshair;
+        height: 500px;
+      width: 500px;
+      margin: auto;
       }
       #picker {
         list-style: none;
@@ -83,6 +101,7 @@
         height: 30px;
         background: #3b93da;
         text-align: center;
+        font-size: small;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -101,7 +120,7 @@
       }
       .cards{
         display: flex;
-
+        margin-top: 10px;
       }
 
       .cards >div{
@@ -118,8 +137,8 @@
       /* Customize the label (the container) */
 
 .containerx{
-    width: 50%;
     display: flex;
+    margin-top: 3%;
 }
 
  .label {
@@ -246,6 +265,9 @@
       position: fixed;
       margin: 0px;
       padding-top: 20px;
+      height: 500px;
+      width: 500px;
+      margin: auto;
     }
     .toolSize{
       margin-left: 10%;
@@ -257,7 +279,12 @@
       margin-top: 10px;
       margin-bottom: 10px;
     }
-
+    .w-50{
+      width: 50%!important;
+    }
+    .f-18{
+      font-size: 20px;
+    }
     </style>
   </head>
   <body>
@@ -266,7 +293,7 @@
     </svg>
   
     <div class="container mx-auto flex flex-col justify-center items-center h-100">
-      <h1 class="mt-4 font-bold text-xxl">Make your own Egg PFP</h1>
+      <h1 class="mt-4 font-bold f-18">Nested Egg PFP Builder</h1>
       <div id="eggContainer">
 
         <div class="canvasWrapper">
@@ -274,107 +301,121 @@
           <canvas id="canvasb" width="500" height="500"></canvas>
           <div class="controls">
             <div class="selectContainer"> 
-              <div class="my-4">
-                <h2 class="text-lg py-2">0) Remove the background</h2>
+              <div class="my-4 w-50">
+                <h2 class="text-lg py-2 title-c">Remove Image Background (Optional)</h2>
                 <form>
                   <label class="file">
                     <input type="file" name="file" id="file" onchange="rembg()">
-                    Select
+                    Choose an image
                   </label>
                </form>
+               <h2 class="text-lg py-2 title-c">Choose an image</h2>
+               <label class="file" style="margin-bottom: 2rem;">
+                 <input type="file" id="upload">
+                 Select
+               </label>
+                          
+
+            <span class="title-c" style="padding: 0.5rem 0px;">Scale, X, Y and Rotate</span>
+            <div class="cards">
+              <div class="divRight">
+                <div>
+                  <h4>Scale</h4>
+                  <input type="range" min="1" max="300" value="100" class="slider" id="scaleRange">
+                  <input type="number" min="1" max="300" value="100" id="scaleInput" class="border border-grey-800 px-2 py-1 ml-2">
+                </div>
+  
+                <div>
+                  <h4>X</h4>
+                  <input type="range" min="-100" max="100" value="0" class="slider" id="xRange">
+                  <input type="number" min="-100" max="100" value="0" id="xInput" class="border border-grey-800 px-2 py-1 ml-2">
+                </div>
+  
+                <div>
+                  <h4>Y</h4>
+                  <input type="range" min="-100" max="100" value="0" class="slider" id="yRange">
+                  <input type="number" min="-100" max="100" value="0" id="yInput" class="border border-grey-800 px-2 py-1 ml-2">
+                </div>
+    
+                <div>
+                  <h4>Rotate</h4>
+                  <input type="range" min="0" max="360" value="0" class="slider" id="rotateRange">
+                  <input type="number" min="0" max="360" value="0" id="rotateInput" class="border border-grey-800 px-2 py-1 ml-2">
+                </div>
               </div>
-        
-              <div class="my-4 m1">
-                <h2 class="text-lg py-2">1. Choose an image</h2>
-                <label class="file">
-                  <input type="file" id="upload">
-                  Select
-                </label>
-              </div>
-            </div>
-          <div class="cards">
-            <div class="divRight">
-              <div>
-                <h4>Scale</h4>
-                <input type="range" min="1" max="300" value="100" class="slider" id="scaleRange">
-                <input type="number" min="1" max="300" value="100" id="scaleInput" class="border border-grey-800 px-2 py-1 ml-2">
-              </div>
-
-              <div>
-                <h4>X</h4>
-                <input type="range" min="-100" max="100" value="0" class="slider" id="xRange">
-                <input type="number" min="-100" max="100" value="0" id="xInput" class="border border-grey-800 px-2 py-1 ml-2">
-              </div>
-            </div>
-
-            <div class="divLeft">
-            <div>
-              <h4>Y</h4>
-              <input type="range" min="-100" max="100" value="0" class="slider" id="yRange">
-              <input type="number" min="-100" max="100" value="0" id="yInput" class="border border-grey-800 px-2 py-1 ml-2">
-            </div>
-
-            <div>
-              <h4>Rotate</h4>
-              <input type="range" min="0" max="360" value="0" class="slider" id="rotateRange">
-              <input type="number" min="0" max="360" value="0" id="rotateInput" class="border border-grey-800 px-2 py-1 ml-2">
-            </div>
-          </div>
-          </div>
-          <div class="container d-flex my-10">
-            <div class="containerx">
-            <label class="label"><i class="fas fa-arrow-up-right"></i>
-              <input type="checkbox" id="overlapping" class="s1" onchange="drawPFP()">
-              <span class="checkmark"></span>
-            </label>
-
-            <label class="label"><i class="fas fa-arrow-up-left"></i>
-              <input type="checkbox" id="overlapping2" class="s2" onchange="drawPFP()">
-              <span class="checkmark"></span>
-            </label>
-
-            <label class="label"><i class="fas fa-arrow-down-right"></i>
-              <input type="checkbox" id="overlapping3" class="s3" onchange="drawPFP()">
-              <span class="checkmark"></span>
-            </label>
-
-            <label class="label"><i class="fas fa-arrow-down-left"></i>
-              <input type="checkbox" id="overlapping4" class="s4" onchange="drawPFP()">
-              <span class="checkmark"></span>
-            </label>
-
-          </div>
-            <div class="rightSide">
-              <a class="draw" onclick="toggleDraw()"><img src="https://img.icons8.com/fluency-systems-filled/48/000000/pencil-tip.png"/></a>
-              <input type="color" value="#000000" id="style" class="colorPicker"/>
+  
+              <div class="divLeft">
               
-              <a class="erase" onclick="toggleErase()">
-                <img src="https://img.icons8.com/fluency-systems-filled/48/000000/erase.png"/>
-              </a>
-              <input type="number" value="5" min="1" max="50" class="toolSize" />
+            </div>
+            </div>
+
+            <div class="container d-flex my-10">
+              <div class="downup">
+              <span class="title-c">Quadrant Overlays</span>
+              <div class="containerx">
+              <label class="label"><i class="fas fa-arrow-up-right"></i>
+                <input type="checkbox" id="overlapping" class="s1" onchange="drawPFP()">
+                <span class="checkmark"></span>
+              </label>
+  
+              <label class="label"><i class="fas fa-arrow-up-left"></i>
+                <input type="checkbox" id="overlapping2" class="s2" onchange="drawPFP()">
+                <span class="checkmark"></span>
+              </label>
+  
+              <label class="label"><i class="fas fa-arrow-down-right"></i>
+                <input type="checkbox" id="overlapping3" class="s3" onchange="drawPFP()">
+                <span class="checkmark"></span>
+              </label>
+  
+              <label class="label"><i class="fas fa-arrow-down-left"></i>
+                <input type="checkbox" id="overlapping4" class="s4" onchange="drawPFP()">
+                <span class="checkmark"></span>
+              </label>
+  
             </div>
           </div>
-            
-            
-            <h2 class="text-lg pt-2">2. Choose an egg color</h2>
+            <div class="updown">
+              <span class="title-c">EDITOR</span>
+              <div class="rightSide">
+
+                <a class="draw" onclick="toggleDraw()"><img src="https://img.icons8.com/fluency-systems-filled/48/000000/pencil-tip.png"/></a>
+                <input type="color" value="#000000" id="style" class="colorPicker"/>
+                
+                
+                <input type="number" value="5" min="1" max="50" class="toolSize" />
+              </div>
+            </div>
+            </div>
+              
+              </div>
+              
+              <div class="my-4 m1 w-50">
+                <h2 class="text-lg pt-2 title-c">Choose an egg color</h2>
         
-        <div>
-          <ul id="picker">
-            <li id="purpleColor"></li>
-            <li id="greenColor"></li>
-            <li id="darkPurpleColor"></li>
-            <li id="lightOrangeColor"></li>
-            <li id="greyColor"></li>
-            <li id="blueColor"></li>
-            <li id="redColor"></li>
-            <li id="orangeColor"></li>
-            <li id="neonGreenColor"></li>
-            <li id="lightBlueColor"></li>
-            <li id="darkBlueColor"></li>
-            <li id="darkGreenColor"></li>
-            <li id="darkRedColor"></li>
-          </ul>
-        </div>
+            <div style="width: 32%;">
+              <ul id="picker">
+                <li id="purpleColor"></li>
+                <li id="greenColor"></li>
+                <li id="darkPurpleColor"></li>
+                <li id="lightOrangeColor"></li>
+                <li id="greyColor"></li>
+                <li id="blueColor"></li>
+                <li id="redColor"></li>
+                <li id="orangeColor"></li>
+                <li id="neonGreenColor"></li>
+                <li id="lightBlueColor"></li>
+                <li id="darkBlueColor"></li>
+                <li id="darkGreenColor"></li>
+                <li id="darkRedColor"></li>
+              </ul>
+            </div>
+              </div>
+            </div>
+
+
+            
+           
 
         <button id="saveBtn" class="bg-blue-500 text-white px-6 py-2 rounded rounded-sm">Save</button>
           </div>
