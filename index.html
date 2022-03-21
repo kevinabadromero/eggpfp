@@ -249,7 +249,9 @@
       .erase:hover{
         transform: scale(1.1);
       }
-
+      .updown{
+        justify-content: center;
+      }
 
     .rightSide{
       width: 50%;
@@ -285,6 +287,49 @@
     .f-18{
       font-size: 20px;
     }
+    .pickDiv{
+        width: 32%;
+      }
+    @media(max-width:1900px){
+      .controls{
+        height: 500px;
+        zoom: .80;
+      }
+      .pickDiv{
+        width: 22%;
+      }
+    }
+
+    @media(max-width:1600px){
+      .pickDiv{
+        width: 28%;
+      }
+      .controls{
+        width: 55%;
+      }
+
+      .db{
+        display: none;
+      }
+    }
+
+    @media(max-width:1500px){
+      .updown{
+        display: flex;
+        align-items: end;
+        flex-direction: column;
+        padding-right: 10%;
+      }
+      .rightSide{
+        width: auto!important;
+      }
+
+    }
+
+    @media(max-width:1300px){
+
+    }
+
     </style>
   </head>
   <body>
@@ -322,25 +367,25 @@
                 <div>
                   <h4>Scale</h4>
                   <input type="range" min="1" max="300" value="100" class="slider" id="scaleRange">
-                  <input type="number" min="1" max="300" value="100" id="scaleInput" class="border border-grey-800 px-2 py-1 ml-2">
+                  <input type="number" min="1" max="300" value="100" id="scaleInput" class="border db border-grey-800 px-2 py-1 ml-2">
                 </div>
   
                 <div>
                   <h4>X</h4>
                   <input type="range" min="-100" max="100" value="0" class="slider" id="xRange">
-                  <input type="number" min="-100" max="100" value="0" id="xInput" class="border border-grey-800 px-2 py-1 ml-2">
+                  <input type="number" min="-100" max="100" value="0" id="xInput" class="border db border-grey-800 px-2 py-1 ml-2">
                 </div>
   
                 <div>
                   <h4>Y</h4>
                   <input type="range" min="-100" max="100" value="0" class="slider" id="yRange">
-                  <input type="number" min="-100" max="100" value="0" id="yInput" class="border border-grey-800 px-2 py-1 ml-2">
+                  <input type="number" min="-100" max="100" value="0" id="yInput" class="border db border-grey-800 px-2 py-1 ml-2">
                 </div>
     
                 <div>
                   <h4>Rotate</h4>
                   <input type="range" min="0" max="360" value="0" class="slider" id="rotateRange">
-                  <input type="number" min="0" max="360" value="0" id="rotateInput" class="border border-grey-800 px-2 py-1 ml-2">
+                  <input type="number" min="0" max="360" value="0" id="rotateInput" class="border db border-grey-800 px-2 py-1 ml-2">
                 </div>
               </div>
   
@@ -376,7 +421,7 @@
             </div>
           </div>
             <div class="updown">
-              <span class="title-c">EDITOR</span>
+
               <div class="rightSide">
 
                 <a class="draw" onclick="toggleDraw()"><img src="https://img.icons8.com/fluency-systems-filled/48/000000/pencil-tip.png"/></a>
@@ -391,9 +436,9 @@
               </div>
               
               <div class="my-4 m1 w-50">
-                <h2 class="text-lg pt-2 title-c">Choose an egg color</h2>
+                <h2 class="text-lg pt-2 title-c">Egg Color</h2>
         
-            <div style="width: 32%;">
+            <div class="pickDiv">
               <ul id="picker">
                 <li id="purpleColor"></li>
                 <li id="greenColor"></li>
