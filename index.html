@@ -14,6 +14,9 @@
       *{
         font-family: 'Open Sans', sans-serif;
       }
+      .cards2{
+        display: none;
+      }
       .title-c{
         font-size: 18px;
         color: #000;
@@ -25,6 +28,8 @@
 
       .downup{
         height: 65px;
+        display: flex;
+        align-items: center;
         width: 50%;
       }
 
@@ -120,7 +125,7 @@
       }
       .cards{
         display: flex;
-        margin-top: 10px;
+        margin: 10px 0px;
       }
 
       .cards >div{
@@ -139,6 +144,11 @@
 .containerx{
     display: flex;
     margin-top: 3%;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    width: 100%;
+
 }
 
  .label {
@@ -158,6 +168,11 @@
   cursor: pointer;
   height: 0;
   width: 0;
+}
+
+.s1,.s2,.s3,.s4{
+    width: 30px;
+    height: 30px;
 }
 
 /* Create a custom checkbox */
@@ -250,12 +265,14 @@
         transform: scale(1.1);
       }
       .updown{
-        justify-content: center;
+        display: flex;
+        align-items: center;
+        
       }
 
     .rightSide{
-      width: 50%;
       display: flex;
+      width: 100%;
       align-items: center;
     }
     .op-1{
@@ -315,20 +332,102 @@
 
     @media(max-width:1500px){
       .updown{
-        display: flex;
-        align-items: end;
-        flex-direction: column;
-        padding-right: 10%;
+        
       }
       .rightSide{
-        width: auto!important;
+
       }
 
     }
 
     @media(max-width:1300px){
+      .cards{
+        display: none;
+      }
+      .cards2{
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 10px;
+      }
+      .title-p{
+        display: none;
+      }
+      .canvasWrapper{
+        flex-direction: column;
+      }
+
+      #canvasb{
+        z-index: 50002;
+        position: fixed;
+        right: 0;
+        left: 0;
+        height: 500px;
+        width: 500px;
+        margin: 0 auto;
+    }
+    .controls{
+      zoom:normal;
+      padding: 0px 50px;
+      width: 500px;
+      height: auto;
+    }
+    .selectContainer{
+      flex-direction: column;
+    }
+    .w-50{
+      width: 100%!important;
+    }
+    .pickDiv{
+      width: 100%;
+    }
+    .row-content{
+      display: flex;
+      justify-content: space-between;
 
     }
+    .title-c{
+      font-size: 14px;
+    }
+    .containerx{
+      display: flex;
+      margin-top: 3%;
+      align-items: center;
+      justify-content: center;
+      flex-direction: row;
+      width: 100%;
+    }
+    .bottom, .top{
+      padding: 0 2.5;
+    }
+    .my-4{
+      margin: 0;
+    }
+    .downup, .updown{
+        height: 40px;
+    }
+
+    #canvas, #canvasb{
+      width: 500px;
+      height: 500px;
+      padding: 0px;
+    }
+    
+  }
+
+  @media (max-width:1300px) and (min-height:1800px) {
+    #eggContainer{
+      zoom: 1.82;
+    }
+  }
+
+  @media (max-width:1300px) and (max-height:1080px) {
+    #eggContainer{
+      zoom: 0.82;
+    }
+    #canvas, #canvasb{
+      zoom: 1.22;
+    }
+  }
 
     </style>
   </head>
@@ -338,7 +437,7 @@
     </svg>
   
     <div class="container mx-auto flex flex-col justify-center items-center h-100">
-      <h1 class="mt-4 font-bold f-18">Nested Egg PFP Builder</h1>
+      <h1 class="mt-4 font-bold f-18 title-p">Nested Egg PFP Builder</h1>
       <div id="eggContainer">
 
         <div class="canvasWrapper">
@@ -347,21 +446,66 @@
           <div class="controls">
             <div class="selectContainer"> 
               <div class="my-4 w-50">
-                <h2 class="text-lg py-2 title-c">Remove Image Background (Optional)</h2>
-                <form>
-                  <label class="file">
-                    <input type="file" name="file" id="file" onchange="rembg()">
-                    Choose an image
-                  </label>
-               </form>
-               <h2 class="text-lg py-2 title-c">Choose an image</h2>
-               <label class="file" style="margin-bottom: 2rem;">
-                 <input type="file" id="upload">
-                 Select
-               </label>
+                
+
+                <div class="row-content">
+                  <div class="row-1">
+                    <h2 class="text-lg py-2 title-c">Remove Image Background (Optional)</h2>
+                    <form>
+                      <label class="file">
+                        <input type="file" name="file" id="file" onchange="rembg()">
+                        Select
+                      </label>
+                    </form>
+                  </div>
+                  
+                  <div class="row-2">
+                    <h2 class="text-lg py-2 title-c">Choose an image</h2>
+                    <label class="file" style="margin-bottom: 2rem;">
+                      <input type="file" id="upload">
+                      Select
+                    </label>
+                  </div>
+                </div>
                           
 
-            <span class="title-c" style="padding: 0.5rem 0px;">Scale, X, Y and Rotate</span>
+            <!--<span class="title-c" style="padding: 0.5rem 0px;">Scale, X, Y and Rotate</span>-->
+            <div class="cards2">
+
+              <div class="divRight">
+
+                <div>
+                  <h4>Scale</h4>
+                  <input type="range" min="1" max="300" value="100" class="slider" id="scaleRange">
+                  <input type="number" min="1" max="300" value="100" id="scaleInput" class="border db border-grey-800 px-2 py-1 ml-2">
+                </div>
+  
+                <div>
+                  <h4>X</h4>
+                  <input type="range" min="-100" max="100" value="0" class="slider" id="xRange">
+                  <input type="number" min="-100" max="100" value="0" id="xInput" class="border db border-grey-800 px-2 py-1 ml-2">
+                </div>
+
+              </div>
+
+              <div class="divLeft">
+
+                <div>
+                  <h4>Y</h4>
+                  <input type="range" min="-100" max="100" value="0" class="slider" id="yRange">
+                  <input type="number" min="-100" max="100" value="0" id="yInput" class="border db border-grey-800 px-2 py-1 ml-2">
+                </div>
+    
+                <div>
+                  <h4>Rotate</h4>
+                  <input type="range" min="0" max="360" value="0" class="slider" id="rotateRange">
+                  <input type="number" min="0" max="360" value="0" id="rotateInput" class="border db border-grey-800 px-2 py-1 ml-2">
+                </div>
+
+              </div>
+
+            </div>
+
             <div class="cards">
               <div class="divRight">
                 <div>
@@ -394,31 +538,23 @@
             </div>
             </div>
 
+
+            <span class="title-c">Quadrant Overlays / Editor</span>
             <div class="container d-flex my-10">
               <div class="downup">
-              <span class="title-c">Quadrant Overlays</span>
+              
               <div class="containerx">
-              <label class="label"><i class="fas fa-arrow-up-right"></i>
-                <input type="checkbox" id="overlapping" class="s1" onchange="drawPFP()">
-                <span class="checkmark"></span>
-              </label>
-  
-              <label class="label"><i class="fas fa-arrow-up-left"></i>
-                <input type="checkbox" id="overlapping2" class="s2" onchange="drawPFP()">
-                <span class="checkmark"></span>
-              </label>
-  
-              <label class="label"><i class="fas fa-arrow-down-right"></i>
-                <input type="checkbox" id="overlapping3" class="s3" onchange="drawPFP()">
-                <span class="checkmark"></span>
-              </label>
-  
-              <label class="label"><i class="fas fa-arrow-down-left"></i>
-                <input type="checkbox" id="overlapping4" class="s4" onchange="drawPFP()">
-                <span class="checkmark"></span>
-              </label>
-  
-            </div>
+                <div class="top">
+                  <input type="checkbox" id="overlapping" class="s1" onchange="drawPFP()">
+                  <input type="checkbox" id="overlapping2" class="s2" onchange="drawPFP()">
+                </div>
+                
+                <div class="bottom">
+                  <input type="checkbox" id="overlapping3" class="s3" onchange="drawPFP()">
+                  <input type="checkbox" id="overlapping4" class="s4" onchange="drawPFP()">
+                </div>
+             
+              </div>
           </div>
             <div class="updown">
 
