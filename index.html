@@ -477,13 +477,13 @@
                 <div>
                   <h4>Scale</h4>
                   <input type="range" min="1" max="300" value="100" class="slider" id="scaleRange">
-                  <input type="number" min="1" max="300" value="100" id="scaleInput" class="border db border-grey-800 px-2 py-1 ml-2">
+                  <input type="number" min="1" max="300" value="100" id="scaleInput" class="scaleInput border db border-grey-800 px-2 py-1 ml-2">
                 </div>
   
                 <div>
                   <h4>X</h4>
                   <input type="range" min="-100" max="100" value="0" class="slider" id="xRange">
-                  <input type="number" min="-100" max="100" value="0" id="xInput" class="border db border-grey-800 px-2 py-1 ml-2">
+                  <input type="number" min="-100" max="100" value="0" id="xInput" class="xInput border db border-grey-800 px-2 py-1 ml-2">
                 </div>
 
               </div>
@@ -493,13 +493,13 @@
                 <div>
                   <h4>Y</h4>
                   <input type="range" min="-100" max="100" value="0" class="slider" id="yRange">
-                  <input type="number" min="-100" max="100" value="0" id="yInput" class="border db border-grey-800 px-2 py-1 ml-2">
+                  <input type="number" min="-100" max="100" value="0" id="yInput" class="yInput border db border-grey-800 px-2 py-1 ml-2">
                 </div>
     
                 <div>
                   <h4>Rotate</h4>
                   <input type="range" min="0" max="360" value="0" class="slider" id="rotateRange">
-                  <input type="number" min="0" max="360" value="0" id="rotateInput" class="border db border-grey-800 px-2 py-1 ml-2">
+                  <input type="number" min="0" max="360" value="0" id="rotateInput" class="rotateInput border db border-grey-800 px-2 py-1 ml-2">
                 </div>
 
               </div>
@@ -511,25 +511,25 @@
                 <div>
                   <h4>Scale</h4>
                   <input type="range" min="1" max="300" value="100" class="slider" id="scaleRange">
-                  <input type="number" min="1" max="300" value="100" id="scaleInput" class="border db border-grey-800 px-2 py-1 ml-2">
+                  <input type="number" min="1" max="300" value="100" id="scaleInput" class="scaleInput border db border-grey-800 px-2 py-1 ml-2">
                 </div>
   
                 <div>
                   <h4>X</h4>
                   <input type="range" min="-100" max="100" value="0" class="slider" id="xRange">
-                  <input type="number" min="-100" max="100" value="0" id="xInput" class="border db border-grey-800 px-2 py-1 ml-2">
+                  <input type="number" min="-100" max="100" value="0" id="xInput" class="xInput border db border-grey-800 px-2 py-1 ml-2">
                 </div>
   
                 <div>
                   <h4>Y</h4>
                   <input type="range" min="-100" max="100" value="0" class="slider" id="yRange">
-                  <input type="number" min="-100" max="100" value="0" id="yInput" class="border db border-grey-800 px-2 py-1 ml-2">
+                  <input type="number" min="-100" max="100" value="0" id="yInput" class="yInput border db border-grey-800 px-2 py-1 ml-2">
                 </div>
     
                 <div>
                   <h4>Rotate</h4>
                   <input type="range" min="0" max="360" value="0" class="slider" id="rotateRange">
-                  <input type="number" min="0" max="360" value="0" id="rotateInput" class="border db border-grey-800 px-2 py-1 ml-2">
+                  <input type="number" min="0" max="360" value="0" id="rotateInput" class="rotateInput border db border-grey-800 px-2 py-1 ml-2">
                 </div>
               </div>
   
@@ -606,6 +606,21 @@
   
     
   <script>
+      if(window.innerWidth <= 1300){
+        $(".cards").remove()
+      }else{
+        $(".cards2").remove()
+      }
+
+      window.addEventListener("resize", function () {
+            if(window.innerWidth <= 1300){
+              $(".cards").remove()
+            }else{
+              $(".cards2").remove()
+            }
+      });
+
+
       var canvas = document.getElementById('canvas');
       canvas.width = 500;
       canvas.height = 500;
