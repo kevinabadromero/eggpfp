@@ -38,11 +38,9 @@
         height: 65px;
       }
       #canvas {
-        padding-top: 20px;
         cursor: crosshair;
         height: 500px;
-      width: 500px;
-      margin: auto;
+        width: 500px;
       }
       #picker {
         list-style: none;
@@ -283,7 +281,6 @@
       z-index: 50002;
       position: fixed;
       margin: 0px;
-      padding-top: 20px;
       height: 500px;
       width: 500px;
       margin: auto;
@@ -561,8 +558,22 @@
               <div class="rightSide">
 
                 <a class="draw" onclick="toggleDraw()"><img src="https://img.icons8.com/fluency-systems-filled/48/000000/pencil-tip.png"/></a>
-                <input type="color" value="#000000" id="style" class="colorPicker"/>
-                
+                <input type="color" value="#000000" id="style" class="colorPicker"  list="presetColors"/>
+                <datalist id="presetColors">
+                  <option>#754eab</option>
+                  <option>#7f3485</option>
+                  <option>#49913b</option>
+                  <option>#f6a43e</option>
+                  <option>#8799a5</option>
+                  <option>#3b93da</option>
+                  <option>#bf1931</option>
+                  <option>#e85f28</option>
+                  <option>#aee355</option>
+                  <option>#aad3e5</option>
+                  <option>#346a86</option>
+                  <option>#35856a</option>
+                  <option>#982b40</option>
+                </datalist>
                 
                 <input type="number" value="5" min="1" max="50" class="toolSize" />
               </div>
@@ -620,7 +631,8 @@
             }
       });
 
-
+      var deactivate_drag;
+      deactivate_drag = false;
       var canvas = document.getElementById('canvas');
       canvas.width = 500;
       canvas.height = 500;
@@ -641,6 +653,8 @@
       const saveBtn = document.getElementById("saveBtn");
       const upload = document.getElementById("upload");
       var ctx = canvas.getContext('2d');
+      var canvasx = $(canvasb).offset().left;
+      var canvasy = $(canvasb).offset().top;
       var h = canvas.height;
       var w = canvas.width;
       var rawImage;
@@ -650,7 +664,36 @@
       var center = {x: 250,y: 250}
       var actualWidth;
       var actualHeight;
-      
+      var mousetdown;
+
+
+
+      $(canvasb).on('mousedown', function(e) {
+        if (!deactivate_drag){
+          mousetdown = true;
+
+        }
+      });
+      $(canvasb).on('mouseup', function(e) {
+        if (!deactivate_drag){
+          mousetdown = false;
+        }
+      });
+
+      $(canvasb).on('mousemove', function(e) {
+        if (!deactivate_drag){
+          if(mousetdown) {  
+            initX = parseInt(e.clientX-canvasx);
+            initY = parseInt(e.clientY-canvasy);
+            realDisX = ((initX * 2 ) - 500);
+            realDisY = ((initY * 2) - 500);
+            moveImage(realDisX, realDisY);
+          }
+        }
+      });
+    
+
+
       function resizeAndDraw(height) {
         h = height;
         w = height * aspect; 
@@ -662,6 +705,7 @@
       }
   
       function moveImage(newX, newY) {
+        console.log(newX)
         center.x = newX + (w / 2);
         center.y = newY + (h / 2);
         drawPFP();
@@ -807,6 +851,11 @@
         } 
       }
   
+      
+      
+
+      
+
       upload.addEventListener("change", function (event) {
         if (!this.files || !this.files[0]) return;
         
@@ -966,10 +1015,12 @@
         if (!x){
           x= true
           tooltype = 'draw'
+          deactivate_drag = true
         }
         else{
           x = false;
           tooltype = 'normal'
+          deactivate_drag = false
         }
       }
 
@@ -992,6 +1043,7 @@ $(canvasb).on('mousedown', function(e) {
     last_mousex = mousex = parseInt(e.clientX-canvasx);
 	  last_mousey = mousey = parseInt(e.clientY-canvasy);
     mousedown = true;
+
 });
 
 //Mouseup
